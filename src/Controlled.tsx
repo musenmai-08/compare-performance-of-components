@@ -29,6 +29,7 @@ export const Controlled = () => {
 		console.log(formData);
 	};
 
+	// レンダリングされた時に呼ばれる
 	useEffect(() => {
 		console.log("制御コンポーネントがレンダリングされました");
 	});
