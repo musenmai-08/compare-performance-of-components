@@ -1,54 +1,15 @@
-# React + TypeScript + Vite
+制御コンポーネントと非制御コンポーネントのパフォーマンスの違いを確認するコードです。
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#　 2 つのコンポーネントについて
 
-Currently, two official plugins are available:
+### 制御コンポーネント
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+コンソールに「制御コンポーネントがレンダリングされました」と出力されます。
+また、フォームの内容が変更されると、上記のメッセージに加えて、レンダリングにかかった時間も出力されます。
+制御コンポーネントでは、フォームの値が変更されるたびに、コンソールに表示された時間がかかるということです。
 
-## Expanding the ESLint configuration
+### 非制御コンポーネント
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+初回レンダリング時には「非制御コンポーネントがレンダリングされました」と出力されます。
+制御コンポーネントと違い、フォームの値を変更しても上記のメッセージが表示されません。つまり、非制御コンポーネントでは、フォームの値を変更してもコンポーネントの再レンダリングが起きないということです。
+制御コンポーネントではフォームの値を変更するたびに再レンダリングが起きていたので、これと比較すると、非制御コンポーネントはパフォーマンスに優れていると言えます。
