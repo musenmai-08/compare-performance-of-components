@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Controlled = () => {
+	// レンダリング時間計測用
+	const startTimeRef = useRef<number>(0);
+
 	const [formData, setFormData] = useState(
 		Array(50)
 			.fill("")
 			.map(() => ({ name: "" }))
 	);
 	const handleFormDataChange = (formData: { name: string }[]) => {
+		startTimeRef.current = performance.now();
 		setFormData(formData);
 	};
 
@@ -32,6 +36,18 @@ export const Controlled = () => {
 	// レンダリングされた時に呼ばれる
 	useEffect(() => {
 		console.log("制御コンポーネントがレンダリングされました");
+	});
+
+	// レンダリング時間計測用
+	useEffect(() => {
+		if (startTimeRef.current) {
+			console.log(
+				`制御コンポーネントのレンダリング時間: ${
+					(performance.now() - startTimeRef.current) / 1000
+				}秒`
+			);
+		}
+		startTimeRef.current = 0;
 	});
 
 	return (
